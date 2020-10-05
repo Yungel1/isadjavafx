@@ -32,80 +32,9 @@ import java.util.Map;
 
 public class ComboBoxExperiments extends Application  {
 
-    ListView<Argazki> listViewOfArgazki;
-    ImageView imageView=new ImageView();
-    ComboBox comboBilduma;
-
     @Override
     public void start(Stage primaryStage) throws Exception {
-        /*Elefanteak, landareak etc*/
 
-        comboBilduma = new ComboBox();
-
-        List<String> bildumak = List.of("abereak", "landareak", "frutak");
-
-
-        ObservableList<String> bildumaList = FXCollections.observableArrayList(bildumak);
-
-
-        comboBilduma.setItems(bildumaList);
-
-        Map<String, List<Argazki>> bildumaMap = new HashMap<>();
-
-        bildumaMap.put("abereak", List.of(
-                new Argazki("Elefantea", "elefantea.jpeg"),
-                new Argazki("Txakurra", "txakurra.jpeg"),
-                new Argazki("Untxia", "untxia.png")
-        ));
-
-        bildumaMap.put("landareak", List.of(
-                new Argazki("Kaktusa", "cactus.png"),
-                new Argazki("Berdea", "landareberdea.jpeg"),
-                new Argazki("Ezezaguna", "landarehoria.jpeg")
-        ));
-
-        bildumaMap.put("frutak", List.of(
-                new Argazki("Marrubia", "fresa.jpeg"),
-                new Argazki("Sandia", "sandia.png"),
-                new Argazki("Sagarra", "sagarra.jpeg")
-        ));
-
-        ObservableList<Argazki> argazkiList = FXCollections.observableArrayList();
-        argazkiList.addAll(bildumaMap.get("abereak"));
-
-        listViewOfArgazki = new ListView<>(argazkiList);
-        listViewOfArgazki.getSelectionModel().selectedItemProperty().addListener(  (observable, oldValue, newValue) -> {
-            if (observable.getValue() == null) return;
-
-            String fitx = observable.getValue().getFitx();
-
-            try {
-                imageView.setImage(lortuIrudia(fitx /* 48x48 */));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-        });
-
-
-        /* ################################################################
-        Kaktusa (patata nire kasuan */
-        /*InputStream is = getClass().getResourceAsStream("/potato.png");
-        BufferedImage reader = ImageIO.read(is);
-        Image image = SwingFXUtils.toFXImage(reader,null);
-        ImageView imageView = new ImageView(image);
-        VBox vbox = new VBox(imageView);
-        vbox.setAlignment(Pos.BASELINE_CENTER);
-        vbox.setPadding(new Insets(0,0,0,0));
-        Scene scene = new Scene(vbox, 350, 250);
-        primaryStage.setScene(scene);
-        primaryStage.show();*/
-
-
-        /* ################################################################
-        Txanpona
-         */
-        /*
         primaryStage.setTitle("ComboBox Experiment 1");
 
         ComboBox comboBox = new ComboBox();
@@ -132,28 +61,11 @@ public class ComboBoxExperiments extends Application  {
 
         Scene scene = new Scene(vbox, 200, 120);
         primaryStage.setScene(scene);
-        primaryStage.show();*/
-        comboBilduma.setOnAction(e -> {
-            argazkiList.clear();
-            argazkiList.addAll(bildumaMap.get(comboBilduma.getValue()));
-        });
-        VBox vbox = new VBox(comboBilduma,listViewOfArgazki,imageView);
-
-        Scene scene = new Scene(vbox, 300, 300);
-        primaryStage.setScene(scene);
         primaryStage.show();
 
     }
 
-    private Image lortuIrudia(String location) throws IOException {
-
-        InputStream is = getClass().getResourceAsStream("/" + location);
-        BufferedImage reader = ImageIO.read(is);
-        return SwingFXUtils.toFXImage(reader, null);
-
-    }
-
-    /*Txanpona*//*public float getBalioa(String txanpon){
+    public float getBalioa(String txanpon){
 
         Gson gson = new Gson();
         Txanpona txanpona = gson.fromJson(this.getURL(txanpon), Txanpona.class);
@@ -178,7 +90,7 @@ public class ComboBoxExperiments extends Application  {
         }
         return inputLine;
     }
-*/
+
     public static void main(String[] args) {
         Application.launch(args);
     }
